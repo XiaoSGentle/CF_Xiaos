@@ -1,0 +1,10 @@
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\bin\Debug\Xiaos.exe.config
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\bin\Debug\Xiaos.exe
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\bin\Debug\Xiaos.pdb
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\obj\Debug\Xiaos.csproj.AssemblyReference.cache
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\obj\Debug\Xiaos.Form1.resources
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\obj\Debug\Xiaos.Properties.Resources.resources
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\obj\Debug\Xiaos.csproj.GenerateResource.cache
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\obj\Debug\Xiaos.csproj.CoreCompileInputs.cache
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\obj\Debug\Xiaos.exe
+C:\Users\39334\Desktop\cf脚本\C#\Xiaos\obj\Debug\Xiaos.pdb
