@@ -35,7 +35,8 @@ namespace Xiaos
         }
         public void test()
         {
-            new sld_paoshang().Go(new sld_userConfig(int.Parse(tbxFps.Text), tbxRoomPwd.Text));
+            new sld_paoshang().Go(new sld_userConfig(int.Parse(tbxFps.Text), tbxRoomPwd.Text,int.Parse(tbxMouseParam.Text) ));
+
         }
         /// <summary>
         /// 以下三个是关于快捷键的操作
@@ -70,8 +71,9 @@ namespace Xiaos
                     {
                         case 100:
                             GameConfig.Go();
+                          
                             Log("开始跑商！");
-                            test();
+                            
 
                             break;
                         case 101:
@@ -81,6 +83,11 @@ namespace Xiaos
                     break;
             }
             base.WndProc(ref m);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            test();
         }
     }
 }

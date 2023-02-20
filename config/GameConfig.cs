@@ -20,6 +20,7 @@ namespace Xiaos.config
         {
             int hwnd = dm.FindWindowEx(0, "CrossFire", "穿越火线");
             dm.MoveWindow(hwnd, 0, 0);
+            dm.SetSimMode(3);
         }
     }
 }

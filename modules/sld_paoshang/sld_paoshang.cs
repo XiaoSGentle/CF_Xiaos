@@ -29,7 +29,7 @@ namespace Xiaos
         private void moveAndClick(int x, int y, int delay)
         {
             dm.Delays(delay, delay + 100);
-            dm.MoveToEx(x, y, 10, 10);
+            dm.MoveToEx(x, y, 6, 6);
             dm.Delays(delay, delay + 100);
             dm.LeftClick();
             dm.Delays(30, 200);
@@ -44,6 +44,7 @@ namespace Xiaos
         {
             this.config = userConfig;
             joinGame();
+            //toPlatform();
         }
         /// <summary>
         /// 危险区域检测
@@ -141,18 +142,136 @@ namespace Xiaos
             {
                 Log("移动领取任务");
                 dm.Delays(500, 600);
-                dm.KeyDownChar("a");
-                for (int i = 0; i < 55 + config.Delay_Time; i++)
+                //a
+                dm.KeyDown(65);
+                dm.KeyDown(65);
+                //w
+                dm.KeyDown(87);
+                dm.KeyDown(87);
+                for (int i = 0; i < 52 + config.Delay_Time; i++)
                 {
-                    dm.KeyDownChar("w");
+                    dm.KeyDown(87);
                     dm.Delays(30, 50);
                 }
-                dm.KeyUpChar("a");
-                dm.KeyUpChar("w");
+                dm.KeyUp(65);
+                dm.KeyUp(87);
+                Log("移动到商人处");
+                toPlatform();
             }
+        }
+
+        //传送移动
+
+        public void toPlatform()
+        {
+            dm.delay(1300);
+            dm.KeyPress(69);
+
+            dm.Delays(500, 800);
+          
+            //tab
+            dm.KeyPress(9);
+            dm.Delays(400, 500);
+            Log("移动到商人平台");
+            //曼陀罗头像
+            moveAndClick(555, 510, 200);
+            dm.Delays(200, 399);
+            //确定
+            moveAndClick(557, 467, 200);
+            dm.Delays(600,800);
+            //esc
+            dm.KeyPress(27);
+            dm.Delays(700, 1000);
+
+            dm.KeyDown(87);
+            for(int i= 0; i < 35+config.Delay_Time; i++)
+            {
+                dm.Delays(50,70);
+            }
+            dm.delay(100);   
+            //跳跃
+            dm.KeyPress(32);
+            dm.KeyPress(32);
+            for (int i = 0; i < 15; i++)
+            {
+                dm.Delays(30, 40);
+            }
+            dm.KeyUp(87);
+            dm.delay(200);
+            //d
+           dm.KeyDown(68);
+            for (int i = 0; i < 15+config.Delay_Time; i++)
+            {
+                dm.KeyDown(68);
+                dm.Delays(25, 33);
+            }
+            dm.KeyUp(68);
+            //w
+            dm.KeyPress(87);
+            for (int i = 0; i < 10; i++)
+            {
+                dm.KeyPress(87);
+                dm.Delays(30, 35);
+            }
+            dm.KeyUp(87);
+            //鼠标下移
+            dm.delay(200);
+            for (int i = 0; i < 20+config.Mouse_Param; i++)
+            {
+                dm.Delays(30, 40);
+                dm.MoveR(0, 1);
+            }
+            clearmob();
+        }
+
+
+        //清怪
+
+        public void clearmob()
+        {
+            int Round= 0;
+            Boolean Stop_flag;
+            Log("任务开始！");
+            while (Round <= 3)
+            {
+                Stop_flag = true;
+                fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务开始.bmp", "000000", 1, 0));
+                if (fprList != null)
+                {
+                    dm.LeftDown();
+                    while (Stop_flag)
+                    {
+                        //e
+                        dm.KeyPress(69);
+                        fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务结束.bmp", "000000", 1, 0));
+                        if (fprList != null)
+                        {
+                            dm.delay(300);
+                            fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务结束.bmp", "000000", 1, 0));
+                            if (fprList != null)
+                            {
+                                //r
+                                
+                                dm.LeftUp();
+                                dm.delay(300);
+                                dm.KeyPress(82);
+                                Stop_flag = false;
+                                Round = Round + 1;
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            Log("任务结束");
+
+
+
         }
     }
 
+
+    
     /// <summary>
     ///跑商脚本参数封装
     /// </summary>
@@ -160,6 +279,7 @@ namespace Xiaos
     {
         private int delay_Time;
         private string room_Pwd;
+        private int mouse_Param;
 
         public int Delay_Time
         {
@@ -171,16 +291,22 @@ namespace Xiaos
             get { return room_Pwd; }
             set { room_Pwd = value; }
         }
+        public int Mouse_Param
+        {
+            get { return mouse_Param; }
+            set { mouse_Param = value; }
+        }
 
         public sld_userConfig()
         {
 
         }
 
-        public sld_userConfig(int delay_Time, string room_Pwd)
+        public sld_userConfig(int delay_Time, string room_Pwd,int mouse_Param)
         {
             this.delay_Time = delay_Time;
             this.room_Pwd = room_Pwd;
+            this.mouse_Param = mouse_Param;
         }
     }
 
