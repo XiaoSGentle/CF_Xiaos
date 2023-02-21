@@ -78,6 +78,8 @@ namespace Xiaos
             fppc.FindAndClick(dm.FindPicEx(613, 343, 643, 369, basePath + "成为房主.bmp", "000000", 1, 0), 630, 460, 300);
             //关闭无法创建加密房间弹窗
             fppc.FindAndClick(dm.FindPicEx(615, 349, 660, 364, basePath + "加密房间.bmp", "000000", 1, 0), 630, 460, 300);
+
+            createRoom();
         }
         /// <summary>
         /// 大厅内创建房间
@@ -148,7 +150,7 @@ namespace Xiaos
                 //w
                 dm.KeyDown(87);
                 dm.KeyDown(87);
-                for (int i = 0; i < 52 + config.Delay_Time; i++)
+                for (int i = 0; i < 54 + config.Delay_Time; i++)
                 {
                     dm.KeyDown(87);
                     dm.Delays(30, 50);
@@ -164,13 +166,45 @@ namespace Xiaos
 
         public void toPlatform()
         {
+            Boolean isAtCsFrom = true;
             dm.delay(1300);
-            dm.KeyPress(69);
+            while (isAtCsFrom)
+            {
+                dm.delay(400);
 
-            dm.Delays(500, 800);
-          
-            //tab
-            dm.KeyPress(9);
+                fprList = fppc.FindAndClick(dm.FindPicEx(389, 162, 434, 197, basePath + "商店兑换界面.bmp", "000000", 0.9, 0));
+                if (fprList == null)
+                {
+                    dm.Delays(500, 900);
+                    //e
+                    dm.KeyPress(69);
+
+                }
+                else
+                {
+                    isAtCsFrom = false;
+                }
+
+            }
+                 isAtCsFrom = true;
+                while (isAtCsFrom)
+                {
+                    fprList = fppc.FindAndClick(dm.FindPicEx(575, 153, 611, 171, basePath + "IsAtCsFrom.bmp", "000000", 1, 0));
+                    if (fprList == null)
+                    {
+                        Log("不在传送界面");
+
+                        dm.Delays(700, 1000);
+                        //tab
+                        dm.KeyPress(9);
+                    }
+                    else
+                    {
+                        Log("在传送界面，即将传送");
+                        isAtCsFrom = false;
+                    }
+                }
+            isAtCsFrom = true;
             dm.Delays(400, 500);
             Log("移动到商人平台");
             //曼陀罗头像
@@ -178,14 +212,25 @@ namespace Xiaos
             dm.Delays(200, 399);
             //确定
             moveAndClick(557, 467, 200);
-            dm.Delays(600,800);
+            dm.Delays(1000,1800);  
             //esc
-            dm.KeyPress(27);
-            dm.Delays(700, 1000);
-
-            dm.KeyDown(87);
+            while (isAtCsFrom)
+            {
+                fprList = fppc.FindAndClick(dm.FindPicEx(575, 153, 611, 171, basePath + "IsAtCsFrom.bmp", "000000", 1, 0));
+                if (fprList != null)
+                {
+                    dm.KeyPress(27);
+                    dm.Delays(400, 600);
+                }
+                else
+                {
+                    isAtCsFrom = false;
+                }
+            }
+            
             for(int i= 0; i < 35+config.Delay_Time; i++)
             {
+                dm.KeyDown(87);
                 dm.Delays(50,70);
             }
             dm.delay(100);   
@@ -216,7 +261,7 @@ namespace Xiaos
             dm.KeyUp(87);
             //鼠标下移
             dm.delay(200);
-            for (int i = 0; i < 20+config.Mouse_Param; i++)
+            for (int i = 0; i < 24+config.Mouse_Param; i++)
             {
                 dm.Delays(30, 40);
                 dm.MoveR(0, 1);
@@ -232,28 +277,41 @@ namespace Xiaos
             int Round= 0;
             Boolean Stop_flag;
             Log("任务开始！");
-            while (Round <= 3)
+            while (Round <= 2)
             {
                 Stop_flag = true;
                 fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务开始.bmp", "000000", 1, 0));
                 if (fprList != null)
                 {
                     dm.LeftDown();
+                    if (Round == 1)
+                    {
+                        dm.delay(10000);
+                        dm.KeyPress(69);
+                        dm.KeyPress(69);
+                        dm.KeyPress(69);
+                        dm.delay(12000);
+                    }
+                    else
+                    {
+                        dm.Delays(20000, 23000);
+                    }
                     while (Stop_flag)
                     {
-                        //e
-                        dm.KeyPress(69);
-                        fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务结束.bmp", "000000", 1, 0));
+
+                        fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务结束.bmp", "000000", 0.9, 0));
                         if (fprList != null)
                         {
-                            dm.delay(300);
-                            fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务结束.bmp", "000000", 1, 0));
+                            dm.delay(200);
+                            fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务结束.bmp", "000000", 0.9, 0));
                             if (fprList != null)
                             {
                                 //r
                                 
                                 dm.LeftUp();
                                 dm.delay(300);
+                                dm.KeyPress(82);
+                                dm.KeyPress(82);
                                 dm.KeyPress(82);
                                 Stop_flag = false;
                                 Round = Round + 1;
@@ -264,10 +322,142 @@ namespace Xiaos
                 }
             }
             Log("任务结束");
-
-
-
+            toGetCard();
         }
+        /// <summary>
+        /// 前往获取卡片
+        /// </summary>
+        public void toGetCard()
+        {
+            dm.delay(500);
+            Log("前往领取奖励");
+            for(int i = 0; i < 15; i++)
+            {
+                //s
+                dm.KeyDown(83);
+                dm.Delays(30, 40);
+            }
+            dm.KeyUp(83);
+            //a
+            for (int i = 1; i < config.Delay_Time; i++)
+            {
+                dm.KeyDown(65);
+                dm.Delays(48, 54);
+            }
+           for(int i = 1; i <30 + config.Delay_Time; i++)
+            {
+                //w
+                dm.KeyDown(65);
+                dm.Delays(45, 50);
+                dm.KeyDown(87);
+            }
+           
+            
+
+            //a
+            dm.KeyUp(65);
+            dm.delay(500);
+            dm.KeyPress(32);
+            dm.KeyPress(32);
+            dm.delay(700);
+            dm.KeyUp(87);
+            dm.delay(1000);
+            getCard();
+        }
+
+
+        /// <summary>
+        /// 兑换卡片
+        /// </summary>
+        public void getCard()
+
+        {
+            Log("开始兑换卡片!");
+            Boolean isAtGetCardFrom = true;
+
+            while (isAtGetCardFrom)
+            {
+                fprList = fppc.FindAndClick(dm.FindPicEx(350, 166, 394, 195, basePath + "商店兑换界面.bmp", "000000", 0.9, 0));
+                if (fprList == null)
+                {
+                    dm.delay(500);
+                    //e
+                    dm.KeyPress(69);
+                }
+                else
+                {
+                    Log("卡片兑换界面！");
+                    isAtGetCardFrom = false;
+                }
+
+                dm.delay(1000);
+
+
+                fprList = fppc.FindAndClick(dm.FindPicEx(460,313,814,345, basePath + "星级卡片.bmp", "000000", 0.9, 0));
+                if (fprList != null)
+                {
+                    for (int i = 0; i < fprList.Count; i++)
+                    {
+                        List<FindPicResult> a  = fppc.FindAndClick(dm.FindPicEx(350, 166, 394, 195, basePath + "商店兑换界面.bmp", "000000", 0.9, 0));
+                        if (a == null)
+                        {
+                            dm.delay(500);
+                            //e
+                            dm.KeyPress(69);
+                        }
+                        else
+                        {
+                            Log("卡片兑换界面！");
+
+                            isAtGetCardFrom = false;
+                            dm.delay(700);
+                            moveAndClick(fprList[0].X, fprList[0].Y - 50, 300);
+                            moveAndClick(642, 556, 300);
+                            dm.delay(5000);
+                        }
+                    }
+                }
+                Log("卡片兑换结束");
+                exitgame();
+            }
+        }
+
+        public void exitgame()
+        {
+           Boolean isAtEscFrom = true;
+           Boolean isAtAccountFrom = true;
+            while (isAtEscFrom)
+            {
+                fprList = fppc.FindAndClick(dm.FindPicEx(618, 92, 716, 116, basePath + "任务开始.bmp", "000000", 1, 0));
+                if (fprList == null)
+                {
+                    dm.delay(300);
+                    dm.KeyPress(27);
+                }
+                else
+                {
+                    dm.KeyPress(13);
+                    dm.delay(300);
+                    dm.KeyPress(13);
+                    dm.delay(300);
+                    dm.KeyPress(13);
+                    isAtEscFrom = false;
+                }
+            }
+            while (isAtAccountFrom)
+            {
+                if(fppc.FindAndClick(dm.FindPicEx(1142, 662, 1197, 682, basePath + "结算页面.bmp", "000000", 1, 0), 995, 671, 500))
+                {
+                    isAtAccountFrom = false;
+                }
+
+                dm.KeyPress(27);
+                dm.delay(300);
+            }
+            dm.delay(3000);
+            popupDetection();
+        }
+
     }
 
 

@@ -23,13 +23,14 @@ namespace Xiaos
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //注册大漠
             RegisterDmSoft.RegisterDmSoftDll();
         }
         /// <summary>
         /// 日志输出
         /// </summary>
         /// <param name="log"></param>
-        public void Log(object log)
+        public  void Log(object log)
         {
             lbxLog.Items.Insert(0, DateTime.Now.ToString() + "-" + log);
         }
@@ -70,11 +71,11 @@ namespace Xiaos
                     switch (m.WParam.ToInt32())
                     {
                         case 100:
+                            Log("配置环境中...请耐心等待！");
                             GameConfig.Go();
-                          
+                            test();
+                            Log("配置成功！");
                             Log("开始跑商！");
-                            
-
                             break;
                         case 101:
                             Log("KEPRESS F4");
@@ -87,6 +88,7 @@ namespace Xiaos
 
         private void button2_Click(object sender, EventArgs e)
         {
+            GameConfig.Go();
             test();
         }
     }
